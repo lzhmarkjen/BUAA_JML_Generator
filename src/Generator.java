@@ -5,18 +5,25 @@ import java.util.Random;
 public class Generator {
     private ArrayList<String> nameField;
     private int pathId;
-    private int querySize;
-    private static final int maxPathLength = 15;
-    private static final int maxNode = 10;
-    private static final int minNode = -10;
-    private int Super = 20;
 
-    public Generator(int querySize) {
+    /*
+    常量区
+     */
+    private static final int querySize = 1000;
+    private static final int maxPathLength = 15;//最大路径长度
+    private static final int maxNode = 10;
+    private static final int minNode = -10;//总节点个数21，提高重复率
+    private int Super = 50;//图变更指令
+
+
+    public Generator() {
         this.nameField = initNameField();
         this.pathId = 0;
-        this.querySize = querySize;
     }
 
+    /*
+     * 此处添加新指令
+     */
     private ArrayList<String> initNameField() {
         ArrayList<String> nameField = new ArrayList<>();
         nameField.add("PATH_ADD");
@@ -36,6 +43,10 @@ public class Generator {
         nameField.add("CONTAINS_EDGE");
         nameField.add("IS_NODE_CONNECTED");
         nameField.add("SHORTEST_PATH_LENGTH");
+        nameField.add("CONNECTED_BLOCK_COUNT");
+        nameField.add("LEAST_TICKET_PRICE");
+        nameField.add("LEAST_TRANSFER_COUNT");
+        nameField.add("LEAST_UNPLEASANT_VALUE");
         return nameField;
     }
 
@@ -44,10 +55,14 @@ public class Generator {
         return (int) (min + Math.random() * (max - min + 1));
     }
 
+    /*
+     * 此处添加新指令逻辑
+     */
     //generate a random query
     private String generateQueue() {
         int choice;
         while (true) {
+            //限制图修改指令的条数
             choice = numRandom(0, nameField.size() - 1);
             if (choice == 0 || choice == 1 || choice == 2) {
                 if (Super-- <= 0) {
@@ -130,6 +145,24 @@ public class Generator {
                 result = addRandomNode(result);
                 result = addRandomNode(result);
                 break;
+            case 17:
+                //CONNECTED_BLOCK_COUNT
+                break;
+            case 18:
+                //LEAST_TICKET_PRICE
+                result = addRandomNode(result);
+                result = addRandomNode(result);
+                break;
+            case 19:
+                //LEAST_TRANSFER_COUNT
+                result = addRandomNode(result);
+                result = addRandomNode(result);
+                break;
+            case 20:
+                //LEAST_UNPLEASANT_VALUE
+                result = addRandomNode(result);
+                result = addRandomNode(result);
+                break;
             default:
                 break;
         }
@@ -137,6 +170,7 @@ public class Generator {
     }
 
     public void go() throws FileNotFoundException {
+        //修改输出流
         System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("./out.txt")), true));
         for (int i = 0; i < querySize; i++) {
             System.out.println(generateQueue());

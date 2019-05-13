@@ -2,7 +2,7 @@
 
 面向OO的第二次第三次JML（第三单元）作业，请切换对应分支
 
-在Main内修改生成的指令条数``querySize``，在Generator内修改最大路径长度``maxPathLength``、最大最小节点编号``maxNode,minNode``，还有”图修改指令“的条数``Super``。
+在Generator内修改生成的指令条数``querySize``、最大路径长度``maxPathLength``、最大最小节点编号``maxNode,minNode``，还有”图修改指令“的条数``Super``。
 
 以下摘自第11次作业指导书
 
